@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.logo{
+    font-family: 'Cabin Sketch', cursive;
+}
+nav{
+    background: #31343a;
+}
