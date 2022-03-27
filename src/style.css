@@ -2,9 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-.logo{
-    font-family: 'Cabin Sketch', cursive;
+
+body {
+  height: 100%;
 }
-nav{
-    background: #31343a;
+#smile{
+  bottom: -15px;
+  left: 200px;
+}
+#left-dot{
+  bottom: 36px;
+  left: 180px;
+}
+#right-dot{
+  bottom: 36px;
+  left: 220px;
 }

@@ -1,15 +1,16 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom"
+export default function Nav(){
 
-export default function Nav() {
-  return (
-    <>
-      <nav className="p-5 mb-5 shadow-lg shadow-black rounded-b-xl flex">
-        <div className="group">
-            <p className="text-5xl text-white logo p-2">Blig-b00k</p>
-            <div className="bg-white h-1 scale-0 group-hover:scale-100 transition-transform"></div>
-        </div>
-      </nav>
-      <Outlet />
-    </>
-  );
+    return(
+        <>
+        <Outlet />
+        <footer className="bg-logo-blue absolute bottom-0 w-full flex py-4 text-xl items-center">
+        <Link className="mx-4 font-chalk text-white text-4xl w-full sm:w-min" to="/">Blig</Link>
+        <Link className="mx-4 text-xl text-center" to="/CreateAccount">Create account</Link>
+        <Link className="mx-4 text-xl text-center" to="/ForgottenPassword">Forgotten password</Link>
+      </footer>
+      
+      </>
+      
+    )
 }
