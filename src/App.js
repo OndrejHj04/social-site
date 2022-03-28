@@ -1,6 +1,7 @@
 import Homepage from "./Homepage";
 import CreateAccount from "./CreateAccount";
 import LostPassword from "./LostPassword";
+import ResetPassword from './ResetPassword'
 
 import "./style.css";
 import {
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/CreateAccount" element={<CreateAccount />} />
           <Route path="/ForgottenPassword" element={<LostPassword />} />
+          <Route path="/ForgottenPassword/reset" element={<ResetPassword />} />
         </Routes>
       </Router>
     </>
