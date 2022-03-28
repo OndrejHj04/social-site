@@ -1,9 +1,12 @@
 import Nav from "./Nav";
 import Logo from "./Logo";
 import { useState } from "react";
+import database from './db.json'
+import { useNavigate } from "react-router-dom";
 export default function CreateAccount() {
 
   const [createProfile, setCreateProfile] = useState({name: "", age: "", email: "", password: "", password2: "", licence: false})
+  const navigate = useNavigate()
 
   function change(event){
     setCreateProfile(oldVal=>{
@@ -13,7 +16,13 @@ export default function CreateAccount() {
       }
     })
   }
-  console.log(createProfile)
+
+  function submit(event){
+    event.preventDefault()
+    database.users.push(createProfile)
+    navigate("/ScrollPage", {replace: true})
+  }
+
   return (
     <>
       <Nav />
@@ -21,7 +30,7 @@ export default function CreateAccount() {
       <div className="flex flex-col w-11/12 mx-auto max-w-2xl my-10">
         <Logo class="mx-auto my-4" />
 
-        <form className="flex flex-col text-xl max-w-96 mx-auto">
+        <form className="flex flex-col text-xl max-w-96 mx-auto" onSubmit={submit}>
           <div className="flex flex-wrap justify-between">
             <label className="my-auto mx-2 w-full sm:w-auto">Username</label>
             <input className="m-2 p-1 w-full sm:w-auto border-2" name="name" type="text" onChange={change} value={createProfile.name}/>

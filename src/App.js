@@ -2,6 +2,7 @@ import Homepage from "./Homepage";
 import CreateAccount from "./CreateAccount";
 import LostPassword from "./LostPassword";
 import ResetPassword from './ResetPassword'
+import ScrollPage from './ScrollPage'
 
 import "./style.css";
 import {
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/CreateAccount" element={<CreateAccount />} />
           <Route path="/ForgottenPassword" element={<LostPassword />} />
           <Route path="/ForgottenPassword/reset" element={<ResetPassword />} />
+          <Route path="/ScrollPage" element={<ScrollPage />} />
         </Routes>
       </Router>
     </>

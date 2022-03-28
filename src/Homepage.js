@@ -1,11 +1,12 @@
 import Nav from "./Nav";
 import Logo from './Logo'
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Homepage() {
 
   const [login, setLogin] = useState({name: "", password: ""})
+  const navigate = useNavigate()
 
   function change(event){
     setLogin(oldVal=>{
@@ -16,20 +17,22 @@ export default function Homepage() {
     })
   }
  
-  console.log(login)
+  function change(){
+    navigate("/ScrollPage", {replace: true})
+  }
 
   return (
     <>
       <Nav />
 
-      <div className="pt-40 max-w-3xl mx-auto flex flex-wrap px-2" id="wrap">
+      <div className="pt-14 max-w-3xl mx-auto flex flex-wrap px-2" id="wrap">
         <div className="mx-auto text-center">
           <Logo />
           <p className="text-lg">Place for all bligumakers</p>
         </div>
 
         <div className="mx-auto">
-          <form className="flex flex-col  p-4 text-xl">
+          <form className="flex flex-col  p-4 pt-0 text-xl" onSubmit={change}>
             <input type="text" className="p-1 border-2 my-2" placeholder="Name" name="name" onChange={change} value={login.name}/>
 
             <input type="text" className="p-1 border-2 my-2" placeholder="Password" name="password" onChange={change} value={login.password}/>
