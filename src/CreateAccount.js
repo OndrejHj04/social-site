@@ -1,4 +1,3 @@
-import Nav from "./Nav";
 import Logo from "./Logo";
 import { useState } from "react";
 import database from './db.json'
@@ -20,12 +19,11 @@ export default function CreateAccount() {
   function submit(event){
     event.preventDefault()
     database.users.push(createProfile)
-    navigate("/ScrollPage", {replace: true})
+    navigate("/ScrollPage")
   }
 
   return (
     <>
-      <Nav />
 
       <div className="flex flex-col w-11/12 mx-auto max-w-2xl my-10">
         <Logo class="mx-auto my-4" />

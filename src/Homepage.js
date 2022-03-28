@@ -1,7 +1,6 @@
-import Nav from "./Nav";
 import Logo from './Logo'
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Homepage() {
 
@@ -18,13 +17,12 @@ export default function Homepage() {
   }
  
   function change(){
-    navigate("/ScrollPage", {replace: true})
+    navigate("/ScrollPage")
   }
 
   return (
     <>
-      <Nav />
-
+    <Outlet />
       <div className="pt-14 max-w-3xl mx-auto flex flex-wrap px-2" id="wrap">
         <div className="mx-auto text-center">
           <Logo />

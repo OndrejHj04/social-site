@@ -1,9 +1,9 @@
 import Homepage from "./Homepage";
 import CreateAccount from "./CreateAccount";
 import LostPassword from "./LostPassword";
-import ResetPassword from './ResetPassword'
-import ScrollPage from './ScrollPage'
-
+import ResetPassword from "./ResetPassword";
+import ScrollPage from "./ScrollPage";
+import Nav from './Nav'
 import "./style.css";
 import {
   BrowserRouter as Router,
@@ -17,11 +17,13 @@ export default function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/CreateAccount" element={<CreateAccount />} />
-          <Route path="/ForgottenPassword" element={<LostPassword />} />
-          <Route path="/ForgottenPassword/reset" element={<ResetPassword />} />
-          <Route path="/ScrollPage" element={<ScrollPage />} />
+          <Route path="" element={<Nav />}>
+            <Route path="/" element={<Homepage />} />
+            <Route path="CreateAccount" element={<CreateAccount />} />
+            <Route path="ForgottenPassword" element={<LostPassword />} />
+            <Route path="ForgottenPassword/reset" element={<ResetPassword />} />
+            <Route path="ScrollPage" element={<ScrollPage />} />
+          </Route>
         </Routes>
       </Router>
     </>

@@ -1,12 +1,11 @@
-import Nav from "./Nav";
 import Logo from "./Logo";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 export default function LostPassword() {
 
   const [changePassword, setChangePassword]  = useState({name: "", email: ""})
   const navigate = useNavigate()
-
   function change(event){
     setChangePassword(oldVal=>{
       return {
@@ -17,11 +16,10 @@ export default function LostPassword() {
   }
   function submit(event){
     event.preventDefault()
-    navigate("reset", {replace: true})
+    navigate("reset")
   }
   return (
     <>
-      <Nav />
   <div className="flex flex-col w-11/12 mx-auto max-w-2xl my-10">
     <Logo class="mx-auto my-4" />
 
@@ -44,6 +42,7 @@ export default function LostPassword() {
 
   </form>
 </div>
+
     </>
   );
 }
