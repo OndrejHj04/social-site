@@ -30,9 +30,9 @@ export default function Homepage() {
 
         <div className="mx-auto">
           <form className="flex flex-col  p-4 text-xl">
-            <input type="text" className="p-1 border-2 my-2" placeholder="Name" name="name" onChange={change}/>
+            <input type="text" className="p-1 border-2 my-2" placeholder="Name" name="name" onChange={change} value={login.name}/>
 
-            <input type="text" className="p-1 border-2 my-2" placeholder="Password" name="password" onChange={change}/>
+            <input type="text" className="p-1 border-2 my-2" placeholder="Password" name="password" onChange={change} value={login.password}/>
             <button className=" p-2 bg-logo-blue text-white rounded-2xl mx-auto my-2 active:bg-dark-logo-blue">
               Login
           </button>
