@@ -6,7 +6,6 @@ export default function Homepage() {
 
   const [login, setLogin] = useState({name: "", password: ""})
   const navigate = useNavigate()
-
   function change(event){
     setLogin(oldVal=>{
       return {
@@ -16,7 +15,8 @@ export default function Homepage() {
     })
   }
  
-  function change(){
+  function redirect(event){
+    event.preventDefault()
     navigate("/ScrollPage")
   }
 
@@ -30,7 +30,7 @@ export default function Homepage() {
         </div>
 
         <div className="mx-auto">
-          <form className="flex flex-col  p-4 pt-0 text-xl" onSubmit={change}>
+          <form className="flex flex-col  p-4 pt-0 text-xl" onSubmit={redirect}>
             <input type="text" className="p-1 border-2 my-2" placeholder="Name" name="name" onChange={change} value={login.name}/>
 
             <input type="text" className="p-1 border-2 my-2" placeholder="Password" name="password" onChange={change} value={login.password}/>
