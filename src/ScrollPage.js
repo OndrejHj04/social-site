@@ -31,41 +31,13 @@ export default function ScrollPage() {
             <img src={require("./img.png")} alt="" width="60" className="m-auto" />
             <div className="w-full flex flex-col">
               <h1 className="text-center">Ondřej Hájek</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto ">Follow</div>
+              <div className="px-2 rounded-md bg-logo-blue m-auto text-white font-semibold">Follow</div>
             </div>
           </div>
 
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Ondřej Hájek</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto ">Follow</div>
-            </div>
-          </div>
 
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Ondřej Hájek</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto ">Follow</div>
-            </div>
-          </div>
 
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Ondřej Hájek</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto ">Follow</div>
-            </div>
-          </div>
 
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Ondřej Hájek</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto ">Follow</div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -92,41 +64,12 @@ export default function ScrollPage() {
             <img src={require("./img.png")} alt="" width="60" className="m-auto" />
             <div className="w-full flex flex-col">
               <h1 className="text-center">Murdria</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto">Follow</div>
+              <div className="px-2 rounded-md bg-logo-blue m-auto text-white font-semibold">Follow</div>
             </div>
           </div>
 
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Murdria</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto">Follow</div>
-            </div>
-          </div>
+          
 
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Murdria</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto">Follow</div>
-            </div>
-          </div>
-
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Murdria</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto">Follow</div>
-            </div>
-          </div>
-
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Murdria</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto">Follow</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

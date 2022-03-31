@@ -26,12 +26,12 @@ export default function ResetPassword() {
 
     <div className="flex flex-wrap justify-between">
       <label className="my-auto mx-2 w-full sm:w-auto">New password</label>
-      <input className="m-2 p-1 w-full sm:w-auto border-2" name="password" type="password" onChange={change} value={reset.password}/>
+      <input className="m-2 p-1 w-full sm:w-auto border-2" name="password" type="password" onChange={change} value={reset.password} autoComplete=""/>
     </div>
 
     <div className="flex flex-wrap justify-between">
       <label className="my-auto mx-2 w-full sm:w-auto">New password again</label>
-      <input className="m-2 p-1 w-full sm:w-auto border-2" name="password2" type="password" onChange={change} value={reset.password2}/>
+      <input className="m-2 p-1 w-full sm:w-auto border-2" name="password2" type="password" onChange={change} value={reset.password2} autoComplete=""/>
     </div>
 
   
