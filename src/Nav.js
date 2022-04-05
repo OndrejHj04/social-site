@@ -22,7 +22,9 @@ export default function Nav() {
 
   return (
     <>
-      <footer className="bg-logo-blue bottom-0 w-full flex py-4 text-xl items-center mt-auto">
+
+
+      <footer className="bg-logo-blue w-full flex py-4 text-xl items-center mt-auto">
         <NavLink className="mx-4 font-chalk text-white text-4xl" to="/">
           Blig
         </NavLink>
@@ -46,9 +48,13 @@ export default function Nav() {
             <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Settings">
               Settings
             </NavLink>
+            <NavLink style={active} className="mx-4 text-xl text-center" to="/">
+              Log out
+            </NavLink>
           </div>
         )}
       </footer>
+
       <Outlet />
     </>
   );

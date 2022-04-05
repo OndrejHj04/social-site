@@ -17,13 +17,15 @@ export default function ScrollPage() {
   function submit(event) {
     event.preventDefault();
     setAllContribution((oldVal) => {
-      return [...oldVal, contribution];
+      return [contribution, ...oldVal];
     });
   }
 
+  
+
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
-      <div className="wrap:w-side-box p-2 border-4 order-1 w-1/2">
+      <div className="wrap:w-side-box p-2 border-4 order-1 w-1/2 h-min">
         <h1 className="font-semibold">You may know...</h1>
 
         <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">
@@ -56,7 +58,7 @@ export default function ScrollPage() {
         </div>
       </div>
 
-      <div className="wrap:w-side-box border-4 p-2 order-2 wrap:order-3 w-1/2">
+      <div className="wrap:w-side-box border-4 p-2 order-2 wrap:order-3 w-1/2 h-min">
         <h1 className="font-semibold">Groups...</h1>
 
         <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">
