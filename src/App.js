@@ -10,6 +10,7 @@ import Settings from "./Settings";
 import "./style.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 export default function App() {
   return (
     <>
