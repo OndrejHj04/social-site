@@ -31,7 +31,10 @@ export default function ScrollPage(props) {
     addDoc(usersRef, contribution)
   }
 
-  const getData = useCallback(()=>{
+
+
+
+  useEffect(()=>{
     onSnapshot(usersRef, (snapshot) => {
       let mes = [];
       snapshot.docs.forEach((doc) => {
@@ -39,12 +42,7 @@ export default function ScrollPage(props) {
       });
       setMessages(mes)
     })
-  },[])
-
-
-  useEffect(()=>{
-    getData()
-  },[getData])
+  },[contribution])
 
 
 
