@@ -42,7 +42,7 @@ export default function ScrollPage(props) {
       });
       setMessages(mes)
     })
-  },[])
+  })
 
 
 

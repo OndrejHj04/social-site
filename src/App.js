@@ -10,7 +10,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import "./style.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBYPLSR349hdzUW2t3H0fQGuLvKNiWe-Os",
