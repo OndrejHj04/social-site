@@ -1,10 +1,10 @@
 
 export default function Contribution(props) {
-  console.log(props.messages)
   const content = props.messages.map((item) => {
     return (
       <div className="flex border-4 mb-2 relative group" key={item.id}>
-        <img src={require("./trash.png")} width="30" height="30" className="absolute right-2 top-2 opacity-0 group-hover:opacity-100" alt="" />
+        <p className="hidden">{item.id}</p>
+        <img src={require("./trash.png")} onClick={props.click} width="30" height="30" className="absolute right-2 top-2 opacity-0 group-hover:opacity-100" alt="" />
         <div className="flex flex-col ">
           <img src={require("./img.png")} alt="" className="my-2 mx-auto h-16 w-16 " />
           <p className="text-base font-semibold text-center">

@@ -1,22 +1,23 @@
 import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
-import { getFirestore, collection, onSnapshot, addDoc } from "firebase/firestore";
-// const date = new Date();
-// const hours = date.getHours();
-// const minutes = date.getMinutes();
-// const day = date.getDate();
-// const month = date.getMonth() + 1;
-// const year = date.getFullYear();
-// let date = `${hours}:${minutes < 10 ? "0" + minutes : minutes}.${day} ${month}.${year}`
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc } from "firebase/firestore";
 
 export default function ScrollPage(props) {
-  // {hours}:{minutes < 10 ? "0" + minutes : minutes} {day}.{month}.{year}
-  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", date: "11:43.6 4.2022", title: "", text: ""});
+  let date = new Date();
+
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  let dateStr = `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${day}.${month}.${year}`;
+  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr});
 
   const [messages, setMessages] = useState();
   const db = getFirestore();
   const usersRef = collection(db, "messages");
-const tempData = useRef()
+  const tempData = useRef();
+
   function change(event) {
     setContribution((oldVal) => {
       return {
@@ -26,27 +27,43 @@ const tempData = useRef()
     });
   }
 
-  function submit(event) {
+  function click(event) {
     event.preventDefault();
-    addDoc(usersRef, contribution)
+
+    const id = event.target.parentElement.firstChild.textContent;
+    const docRef = doc(db, "messages", id);
+    deleteDoc(docRef);
   }
 
-  const fetchData = () =>{
+  useEffect(()=>{
+    setContribution(oldVal=>{
+      return  {...oldVal, date: dateStr}
+    })
+  },[dateStr])
+
+  function submit(event) {
+    event.preventDefault();
+
+    console.log(contribution)
+    addDoc(usersRef, contribution)
+    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr})
+
+  }
+
+  const fetchData = () => {
     onSnapshot(usersRef, (snapshot) => {
       let mes = [];
       snapshot.docs.forEach((doc) => {
         mes.push({ ...doc.data(), id: doc.id });
       });
-      setMessages(mes)
-    })
-  }
-  tempData.current = fetchData
+      setMessages(mes);
+    });
+  };
+  tempData.current = fetchData;
 
-  useEffect(()=>{
-    tempData.current()
-  },[])
-
-
+  useEffect(() => {
+    tempData.current();
+  }, []);
 
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
@@ -69,15 +86,17 @@ const tempData = useRef()
         <form className="flex flex-col w-full" onSubmit={submit}>
           <label className="text-xl font-semibold">Share how do you feel!</label>
           <input type="text" className="bg-logo-blue text-white text-xl font-semibold outline-none p-1 mb-2" placeholder="Title..." onChange={change} value={contribution.title} name="title" />
-          <textarea className="w-full resize-none h-28 outline-none bg-logo-blue text-white p-1" placeholder="Content..." onChange={change} value={contribution.content} name="text"></textarea>
+          <textarea className="w-full resize-none h-28 outline-none bg-logo-blue text-white p-1" placeholder="Content..." onChange={change} value={contribution.text} name="text"></textarea>
           <div className="my-2">
             <button className="bg-logo-blue p-1 rounded-lg text-xl ml-auto">Post!</button>
           </div>
         </form>
 
-        {messages && <div className="flex p-1 flex-col my-1 ">
-          <Contribution messages={messages} />
-        </div>}
+        {messages && (
+          <div className="flex p-1 flex-col my-1 ">
+            <Contribution messages={messages} click={click} />
+          </div>
+        )}
       </div>
 
       <div className="wrap:w-side-box border-4 p-2 order-2 wrap:order-3 w-1/2 h-min">
