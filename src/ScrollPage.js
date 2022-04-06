@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Contribution from "./Contribution";
+import { getFirestore, collection, onSnapshot, addDoc } from "firebase/firestore";
+// const date = new Date();
+// const hours = date.getHours();
+// const minutes = date.getMinutes();
+// const day = date.getDate();
+// const month = date.getMonth() + 1;
+// const year = date.getFullYear();
+// let date = `${hours}:${minutes < 10 ? "0" + minutes : minutes}.${day} ${month}.${year}`
 
-export default function ScrollPage() {
-  const [contribution, setContribution] = useState({ title: "", content: "" });
-  const [allContribution, setAllContribution] = useState([]);
+export default function ScrollPage(props) {
+  // {hours}:{minutes < 10 ? "0" + minutes : minutes} {day}.{month}.{year}
+  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", date: "11:43.6 4.2022", title: "", text: ""});
+
+  const [messages, setMessages] = useState();
+  const db = getFirestore();
+  const usersRef = collection(db, "messages");
 
   function change(event) {
     setContribution((oldVal) => {
@@ -16,10 +28,23 @@ export default function ScrollPage() {
 
   function submit(event) {
     event.preventDefault();
-    setAllContribution((oldVal) => {
-      return [contribution, ...oldVal];
-    });
+    addDoc(usersRef, contribution)
   }
+
+
+
+
+  useEffect(()=>{
+    onSnapshot(usersRef, (snapshot) => {
+      let mes = [];
+      snapshot.docs.forEach((doc) => {
+        mes.push({ ...doc.data(), id: doc.id });
+      });
+      setMessages(mes)
+    })
+  },[])
+
+
 
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
@@ -42,15 +67,15 @@ export default function ScrollPage() {
         <form className="flex flex-col w-full" onSubmit={submit}>
           <label className="text-xl font-semibold">Share how do you feel!</label>
           <input type="text" className="bg-logo-blue text-white text-xl font-semibold outline-none p-1 mb-2" placeholder="Title..." onChange={change} value={contribution.title} name="title" />
-          <textarea className="w-full resize-none h-28 outline-none bg-logo-blue text-white p-1" placeholder="Content..." onChange={change} value={contribution.content} name="content"></textarea>
+          <textarea className="w-full resize-none h-28 outline-none bg-logo-blue text-white p-1" placeholder="Content..." onChange={change} value={contribution.content} name="text"></textarea>
           <div className="my-2">
             <button className="bg-logo-blue p-1 rounded-lg text-xl ml-auto">Post!</button>
           </div>
         </form>
 
-        <div className="flex p-1 flex-col my-1 ">
-          <Contribution allContribution={allContribution} />
-        </div>
+        {messages && <div className="flex p-1 flex-col my-1 ">
+          <Contribution messages={messages} />
+        </div>}
       </div>
 
       <div className="wrap:w-side-box border-4 p-2 order-2 wrap:order-3 w-1/2 h-min">

@@ -40,9 +40,9 @@ export default function Nav() {
 
         {loged && (
           <>
-            <div className="mx-4 font-chalk text-white text-4xl" to="">
+            <NavLink className="mx-4 font-chalk text-white text-4xl" to="/user/ScrollPage">
               Blig
-            </div>
+            </NavLink>
             <div className="flex flex-col sm:flex-row ml-auto sm:m-0">
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Profile">
                 Profile
