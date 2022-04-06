@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
 import { getFirestore, collection, onSnapshot, addDoc } from "firebase/firestore";
 // const date = new Date();
@@ -16,7 +16,7 @@ export default function ScrollPage(props) {
   const [messages, setMessages] = useState();
   const db = getFirestore();
   const usersRef = collection(db, "messages");
-
+const tempData = useRef()
   function change(event) {
     setContribution((oldVal) => {
       return {
@@ -31,10 +31,7 @@ export default function ScrollPage(props) {
     addDoc(usersRef, contribution)
   }
 
-
-
-
-  useEffect(()=>{
+  const fetchData = () =>{
     onSnapshot(usersRef, (snapshot) => {
       let mes = [];
       snapshot.docs.forEach((doc) => {
@@ -42,7 +39,12 @@ export default function ScrollPage(props) {
       });
       setMessages(mes)
     })
-  },[contribution])
+  }
+  tempData.current = fetchData
+
+  useEffect(()=>{
+    tempData.current()
+  },[])
 
 
 
