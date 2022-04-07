@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
-import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy, limit } from "firebase/firestore";
 
 export default function ScrollPage(props) {
   let date = new Date();
@@ -11,11 +11,10 @@ export default function ScrollPage(props) {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let dateStr = `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${day}.${month}.${year}`;
-  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr});
-
+  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr, sort: null });
   const [messages, setMessages] = useState();
   const db = getFirestore();
-  const usersRef = collection(db, "messages");
+  const mesRef = collection(db, "messages");
   const tempData = useRef();
 
   function change(event) {
@@ -35,27 +34,27 @@ export default function ScrollPage(props) {
     deleteDoc(docRef);
   }
 
-  useEffect(()=>{
-    setContribution(oldVal=>{
-      return  {...oldVal, date: dateStr}
-    })
-  },[dateStr])
+  useEffect(() => {
+    setContribution((oldVal) => {
+      return { ...oldVal, date: dateStr };
+    });
+  }, [dateStr]);
 
   function submit(event) {
     event.preventDefault();
 
-    console.log(contribution)
-    addDoc(usersRef, contribution)
-    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr})
-
+    addDoc(mesRef, contribution);
+    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr, sort: null });
   }
 
+  const q = query(mesRef, orderBy("sort", "desc"));
   const fetchData = () => {
-    onSnapshot(usersRef, (snapshot) => {
+    onSnapshot(q, (snapshot) => {
       let mes = [];
       snapshot.docs.forEach((doc) => {
         mes.push({ ...doc.data(), id: doc.id });
       });
+
       setMessages(mes);
     });
   };
@@ -64,6 +63,16 @@ export default function ScrollPage(props) {
   useEffect(() => {
     tempData.current();
   }, []);
+
+  useEffect(()=>{
+    if(messages)
+    setContribution(oldVal=>{
+      return {
+        ...oldVal,
+        sort: messages.length
+      }
+    })
+  },[messages])
 
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
