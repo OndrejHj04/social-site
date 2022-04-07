@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
-import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy, limit } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy } from "firebase/firestore";
 
 export default function ScrollPage(props) {
   let date = new Date();
