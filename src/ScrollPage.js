@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
 import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy } from "firebase/firestore";
 
-export default function ScrollPage(props) {
+export default function ScrollPage() {
   let date = new Date();
 
   let hours = date.getHours();
@@ -11,7 +11,7 @@ export default function ScrollPage(props) {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let dateStr = `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${day}.${month}.${year}`;
-  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr});
+  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr });
   const [messages, setMessages] = useState();
   const db = getFirestore();
   const mesRef = collection(db, "messages");
@@ -44,7 +44,7 @@ export default function ScrollPage(props) {
     event.preventDefault();
 
     addDoc(mesRef, contribution);
-    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr});
+    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr });
   }
 
   const q = query(mesRef, orderBy("sort", "desc"));
@@ -64,26 +64,29 @@ export default function ScrollPage(props) {
     tempData.current();
   }, []);
 
-  let indexes = [0]
+  let indexes = [0];
 
-  if(messages){
-    messages.forEach(item=>{
-      indexes.push(item.sort)
-    })
+  if (messages) {
+    messages.forEach((item) => {
+      indexes.push(item.sort);
+    });
   }
 
-  let high = Math.max(...indexes) + 1
+  let high = Math.max(...indexes) + 1;
 
   useEffect(() => {
-    if (messages) {
-      setContribution((oldVal) => {
-        return {
-          ...oldVal,
-          sort: high,
-        };
-      });
+    function getIndex() {
+      if (messages) {
+        setContribution((oldVal) => {
+          return {
+            ...oldVal,
+            sort: high,
+          };
+        });
+      }
     }
-  }, [messages]);
+    getIndex();
+  }, [high, messages]);
 
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
@@ -113,7 +116,7 @@ export default function ScrollPage(props) {
         </form>
 
         {messages && (
-          <div className="flex p-1 flex-col my-1" >
+          <div className="flex p-1 flex-col my-1">
             <Contribution messages={messages} click={click} />
           </div>
         )}
