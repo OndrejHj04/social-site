@@ -11,7 +11,7 @@ export default function ScrollPage(props) {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let dateStr = `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${day}.${month}.${year}`;
-  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr, sort: null });
+  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr});
   const [messages, setMessages] = useState();
   const db = getFirestore();
   const mesRef = collection(db, "messages");
@@ -44,7 +44,7 @@ export default function ScrollPage(props) {
     event.preventDefault();
 
     addDoc(mesRef, contribution);
-    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr, sort: null });
+    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr});
   }
 
   const q = query(mesRef, orderBy("sort", "desc"));
@@ -64,15 +64,26 @@ export default function ScrollPage(props) {
     tempData.current();
   }, []);
 
-  useEffect(()=>{
-    if(messages)
-    setContribution(oldVal=>{
-      return {
-        ...oldVal,
-        sort: messages.length
-      }
+  let indexes = [0]
+
+  if(messages){
+    messages.forEach(item=>{
+      indexes.push(item.sort)
     })
-  },[messages])
+  }
+
+  let high = Math.max(...indexes) + 1
+
+  useEffect(() => {
+    if (messages) {
+      setContribution((oldVal) => {
+        return {
+          ...oldVal,
+          sort: high,
+        };
+      });
+    }
+  }, [messages]);
 
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
@@ -102,7 +113,7 @@ export default function ScrollPage(props) {
         </form>
 
         {messages && (
-          <div className="flex p-1 flex-col my-1 ">
+          <div className="flex p-1 flex-col my-1" >
             <Contribution messages={messages} click={click} />
           </div>
         )}
