@@ -1,10 +1,16 @@
 import Logo from "./Logo";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 export default function Homepage() {
   const [login, setLogin] = useState({ name: "", password: "" });
   const navigate = useNavigate();
+  const db = getFirestore();
+  const userRef = collection(db, "users");
+  const tempData = useRef();
+  const [users, setUsers] = useState()
+
   function change(event) {
     setLogin((oldVal) => {
       return {
@@ -16,10 +22,30 @@ export default function Homepage() {
 
   function redirect(event) {
     event.preventDefault();
-    navigate("/user/ScrollPage");
+    users.forEach(item=>{
+      if(item.name === login.name && item.password === login.password){
+        navigate("/user/ScrollPage");
+      }
+    })
+    
   }
 
 
+  const fetchData = () => {
+    onSnapshot(userRef, (snapshot) => {
+      let users = [];
+      snapshot.docs.forEach((doc) => {
+        users.push({ ...doc.data(), id: doc.id });
+      });
+      setUsers(users)      
+    });
+  };
+  tempData.current = fetchData;
+
+
+  useEffect(()=>{
+    tempData.current()
+  },[])
 
   return (
     <>

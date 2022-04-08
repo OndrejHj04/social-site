@@ -75,7 +75,6 @@ export default function ScrollPage() {
   let high = Math.max(...indexes) + 1;
 
   useEffect(() => {
-    function getIndex() {
       if (messages) {
         setContribution((oldVal) => {
           return {
@@ -84,8 +83,6 @@ export default function ScrollPage() {
           };
         });
       }
-    }
-    getIndex();
   }, [high, messages]);
 
   return (

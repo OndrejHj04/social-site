@@ -1,10 +1,12 @@
 import Logo from "./Logo";
 import { useState } from "react";
-import database from "./db.json";
 import { useNavigate } from "react-router-dom";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 export default function CreateAccount() {
   const [createProfile, setCreateProfile] = useState({ name: "", age: "", email: "", password: "", password2: "", licence: false });
-  const navigate = useNavigate();
+  const db = getFirestore();
+  const userRef = collection(db, "users");
+  const navigate = useNavigate()
 
   function change(event) {
     setCreateProfile((oldVal) => {
@@ -13,11 +15,12 @@ export default function CreateAccount() {
         [event.target.name]: event.target.name === "licence" ? event.target.checked : event.target.value,
       };
     });
-  }
+  } 
 
   function submit(event) {
-    event.preventDefault();
-    database.users.push(createProfile);
+    event.preventDefault()
+
+    addDoc(userRef, createProfile)
     navigate("/user/ScrollPage");
   }
 
@@ -29,7 +32,7 @@ export default function CreateAccount() {
         <form className="flex flex-col text-xl max-w-96 mx-auto" onSubmit={submit}>
           <div className="flex flex-wrap justify-between">
             <label className="my-auto mx-2 w-full sm:w-auto">Username</label>
-            <input className="m-2 p-1 w-full sm:w-auto border-2" name="name" type="text" onChange={change} value={createProfile.name} />
+            <input className="m-2 p-1 w-full sm:w-auto border-2" name="name" type="text" onChange={change} value={createProfile.name} required/>
           </div>
 
           <div className="flex flex-wrap justify-between">
