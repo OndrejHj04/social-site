@@ -2,7 +2,7 @@ import Logo from "./Logo";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-export default function CreateAccount() {
+export default function CreateAccount(props) {
   const [createProfile, setCreateProfile] = useState({ name: "", age: "", email: "", password: "", password2: "", licence: false });
   const db = getFirestore();
   const userRef = collection(db, "users");
@@ -19,10 +19,11 @@ export default function CreateAccount() {
 
   function submit(event) {
     event.preventDefault()
-
+    props.setActive(createProfile)
     addDoc(userRef, createProfile)
     navigate("/user/ScrollPage");
   }
+
 
   return (
     <>

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-export default function Nav() {
+
+export default function Nav(props) {
   const active = ({ isActive }) => {
     return {
       textDecoration: isActive ? "underline" : "none",
     };
   };
-
   const [loged, setLoged] = useState();
 
   const navigation = useNavigate();
@@ -50,7 +50,7 @@ export default function Nav() {
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Settings">
                 Settings
               </NavLink>
-              <NavLink style={active} className="mx-4 text-xl text-center" to="/">
+              <NavLink style={active} className="mx-4 text-xl text-center" to="/" onClick={props.removeActive}>
                 Log out
               </NavLink>
             </div>

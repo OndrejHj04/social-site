@@ -1,4 +1,4 @@
-export default function Profile(){
-
+export default function Profile(props){
+    
     return <h1>Profile</h1>
 }

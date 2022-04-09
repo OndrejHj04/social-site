@@ -3,13 +3,15 @@ import { useState, useRef, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
-export default function Homepage() {
+export default function Homepage(props) {
   const [login, setLogin] = useState({ name: "", password: "" });
   const navigate = useNavigate();
   const db = getFirestore();
   const userRef = collection(db, "users");
   const tempData = useRef();
   const [users, setUsers] = useState()
+
+  props.removeActive()
 
   function change(event) {
     setLogin((oldVal) => {
@@ -24,6 +26,7 @@ export default function Homepage() {
     event.preventDefault();
     users.forEach(item=>{
       if(item.name === login.name && item.password === login.password){
+      props.setActive(item)
         navigate("/user/ScrollPage");
       }
     })
