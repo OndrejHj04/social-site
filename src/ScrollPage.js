@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
 import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy } from "firebase/firestore";
 
-export default function ScrollPage() {
+export default function ScrollPage(props) {
   let date = new Date();
 
   let hours = date.getHours();
@@ -11,7 +11,7 @@ export default function ScrollPage() {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let dateStr = `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${day}.${month}.${year}`;
-  const [contribution, setContribution] = useState({ user: "Ondřej Hájek", title: "", text: "", date: dateStr });
+  const [contribution, setContribution] = useState({ user: props.user.name, title: "", text: "", date: dateStr });
   const [messages, setMessages] = useState();
   const db = getFirestore();
   const mesRef = collection(db, "messages");
@@ -22,6 +22,7 @@ export default function ScrollPage() {
       return {
         ...oldVal,
         [event.target.name]: event.target.value,
+        user: props.user.name
       };
     });
   }
@@ -44,7 +45,7 @@ export default function ScrollPage() {
     event.preventDefault();
 
     addDoc(mesRef, contribution);
-    setContribution({ user: "Ondřej Hájek", title: "", text: "", date: dateStr });
+    setContribution({ user: props.user.name, title: "", text: "", date: dateStr });
   }
 
   const q = query(mesRef, orderBy("sort", "desc"));
@@ -85,6 +86,7 @@ export default function ScrollPage() {
       }
   }, [high, messages]);
 
+  
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
       <div className="wrap:w-side-box p-2 border-4 order-1 w-1/2 h-min">

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+
 
 export default function Nav(props) {
   const active = ({ isActive }) => {
@@ -7,9 +8,9 @@ export default function Nav(props) {
       textDecoration: isActive ? "underline" : "none",
     };
   };
-  const [loged, setLoged] = useState();
-
+  const [loged, setLoged] = useState();  
   const navigation = useNavigate();
+
 
   useEffect(() => {
     if (window.location.href.includes("user")) {
@@ -19,6 +20,9 @@ export default function Nav(props) {
     }
   }, [navigation]);
 
+
+  
+  
   return (
     <>
       <footer className="bg-logo-blue w-full flex py-4 text-xl items-center mt-auto">
@@ -38,14 +42,14 @@ export default function Nav(props) {
           </>
         )}
 
-        {loged && (
+        {loged && props.user.name && (
           <>
             <NavLink className="mx-4 font-chalk text-white text-4xl" to="/user/ScrollPage">
               Blig
             </NavLink>
             <div className="flex flex-col sm:flex-row ml-auto sm:m-0">
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Profile">
-                Profile
+              {props.user.name}
               </NavLink>
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Settings">
                 Settings
