@@ -93,13 +93,18 @@ export default function ScrollPage({ user, all }) {
         let res = [];
         for (let i = 0; res.length < 5; i++) {
           let rand = Math.floor(Math.random() * data.length);
-          if (!res.includes(data[rand]) && data[rand].name) {
+          if (!res.includes(data[rand]) && data[rand].name !== user.name) {
             res.push(data[rand]);
           }
         }
         return res;
+      }else{
+        data = data.filter(item=>{
+          return item.name !== user.name
+        })
+        return data;
       }
-      return data;
+      
     }
   }
   useEffect(() => {
@@ -107,7 +112,7 @@ export default function ScrollPage({ user, all }) {
     setSideGroups(getUsers([{ name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }]));
   }, [all]);
 
-
+  console.log("xd")
   function side(array) {
     if(array)
     return array.map((item) => {
