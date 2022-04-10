@@ -6,7 +6,7 @@ export default function CreateAccount(props) {
   const [createProfile, setCreateProfile] = useState({ name: "", age: "", email: "", password: "", password2: "", licence: false });
   const db = getFirestore();
   const userRef = collection(db, "users");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function change(event) {
     setCreateProfile((oldVal) => {
@@ -15,15 +15,15 @@ export default function CreateAccount(props) {
         [event.target.name]: event.target.name === "licence" ? event.target.checked : event.target.value,
       };
     });
-  } 
-
-  function submit(event) {
-    event.preventDefault()
-    props.setActive(createProfile)
-    addDoc(userRef, createProfile)
-    navigate("/user/ScrollPage");
   }
 
+  function submit(event) {
+    event.preventDefault();
+    props.setActive(createProfile);
+    addDoc(userRef, createProfile);
+    navigate("/user/ScrollPage");
+    window.location.reload(false); // refresh that is not ideal fixing problem with getting active user data to scrollPage => problem at App.js
+  }
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function CreateAccount(props) {
         <form className="flex flex-col text-xl max-w-96 mx-auto" onSubmit={submit}>
           <div className="flex flex-wrap justify-between">
             <label className="my-auto mx-2 w-full sm:w-auto">Username</label>
-            <input className="m-2 p-1 w-full sm:w-auto border-2" name="name" type="text" onChange={change} value={createProfile.name} required/>
+            <input className="m-2 p-1 w-full sm:w-auto border-2" name="name" type="text" onChange={change} value={createProfile.name} required />
           </div>
 
           <div className="flex flex-wrap justify-between">

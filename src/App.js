@@ -27,12 +27,12 @@ initializeApp(firebaseConfig);
 const db = getFirestore();
 
 export default function App() {
-
   function setActive(user) {
     setDoc(doc(db, "active", "1"), {
       ...user,
       id: "1"
     });
+
   }
 
   function removeActive() {
@@ -45,13 +45,8 @@ export default function App() {
   const fetchData = () => {
     getDocs(docRef)
     .then(snapshot => {
-      // console.log(snapshot.docs)
-      let user = []
-      snapshot.docs.forEach(doc => {
-        user.push({ ...doc.data(), id: doc.id })
-      })
-      setUser(user)
-
+      if(snapshot.docs[0])
+      setUser(snapshot.docs[0].data())
     })
   }
   const [user, setUser] = useState("");
@@ -62,6 +57,7 @@ export default function App() {
   useEffect(() => {
     tempData.current();
   }, []);
+
   return (
     <>
       <Router>

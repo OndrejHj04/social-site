@@ -2,8 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
 import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy } from "firebase/firestore";
 
-export default function ScrollPage(props) {
-  console.log(props)
+export default function ScrollPage({ user }) {
   let date = new Date();
   let hours = date.getHours();
   let minutes = date.getMinutes();
@@ -11,7 +10,7 @@ export default function ScrollPage(props) {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let dateStr = `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${day}.${month}.${year}`;
-  const [contribution, setContribution] = useState({ user: "Hájek", title: "", text: "", date: dateStr });
+  const [contribution, setContribution] = useState({ user: user.name, title: "", text: "", date: dateStr });
   const [messages, setMessages] = useState();
   const db = getFirestore();
   const mesRef = collection(db, "messages");
@@ -22,10 +21,11 @@ export default function ScrollPage(props) {
       return {
         ...oldVal,
         [event.target.name]: event.target.value,
+        user: user.name
       };
     });
   }
-
+  console.log(user.name)
   function click(event) {
     event.preventDefault();
 
@@ -44,7 +44,7 @@ export default function ScrollPage(props) {
     event.preventDefault();
 
     addDoc(mesRef, contribution);
-    setContribution({ user: "Hájek", title: "", text: "", date: dateStr });
+    setContribution({ user: user.name, title: "", text: "", date: dateStr });
   }
 
   const q = query(mesRef, orderBy("sort", "desc"));
@@ -75,17 +75,16 @@ export default function ScrollPage(props) {
   let high = Math.max(...indexes) + 1;
 
   useEffect(() => {
-      if (messages) {
-        setContribution((oldVal) => {
-          return {
-            ...oldVal,
-            sort: high,
-          };
-        });
-      }
+    if (messages) {
+      setContribution((oldVal) => {
+        return {
+          ...oldVal,
+          sort: high,
+        };
+      });
+    }
   }, [high, messages]);
 
-  
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
       <div className="wrap:w-side-box p-2 border-4 order-1 w-1/2 h-min">

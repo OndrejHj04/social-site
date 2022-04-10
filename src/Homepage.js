@@ -9,9 +9,9 @@ export default function Homepage(props) {
   const db = getFirestore();
   const userRef = collection(db, "users");
   const tempData = useRef();
-  const [users, setUsers] = useState()
+  const [users, setUsers] = useState();
 
-  props.removeActive()
+  props.removeActive();
 
   function change(event) {
     setLogin((oldVal) => {
@@ -24,15 +24,14 @@ export default function Homepage(props) {
 
   function redirect(event) {
     event.preventDefault();
-    users.forEach(item=>{
-      if(item.name === login.name && item.password === login.password){
-      props.setActive(item)
+    users.forEach((item) => {
+      if (item.name === login.name && item.password === login.password) {
+        props.setActive(item);
         navigate("/user/ScrollPage");
+        window.location.reload(false); // refresh that is not ideal fixing problem with getting active user data to scrollPage => problem at App.js
       }
-    })
-    
+    });
   }
-
 
   const fetchData = () => {
     onSnapshot(userRef, (snapshot) => {
@@ -40,15 +39,14 @@ export default function Homepage(props) {
       snapshot.docs.forEach((doc) => {
         users.push({ ...doc.data(), id: doc.id });
       });
-      setUsers(users)      
+      setUsers(users);
     });
   };
   tempData.current = fetchData;
 
-
-  useEffect(()=>{
-    tempData.current()
-  },[])
+  useEffect(() => {
+    tempData.current();
+  }, []);
 
   return (
     <>

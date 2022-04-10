@@ -49,7 +49,7 @@ export default function Nav(props) {
             </NavLink>
             <div className="flex flex-col sm:flex-row ml-auto sm:m-0">
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Profile">
-              Profile
+              {props.user.name}
               </NavLink>
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Settings">
                 Settings
