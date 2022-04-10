@@ -1,14 +1,10 @@
 import Logo from "./Logo";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 export default function Homepage(props) {
   const [login, setLogin] = useState({ name: "", password: "" });
   const navigate = useNavigate();
-  const db = getFirestore();
-  const userRef = collection(db, "users");
-  const tempData = useRef();
   const [users, setUsers] = useState();
 
   props.removeActive();
