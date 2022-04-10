@@ -84,24 +84,32 @@ export default function ScrollPage({ user, all }) {
     }
   }, [high, messages]);
 
-
+  const [sideUsers, setSideUsers] = useState();
+  const [sideGroups, setSideGroups] = useState();
 
   function getUsers(data) {
     if (data) {
       if (data.length > 5) {
-        let res = []
+        let res = [];
         for (let i = 0; res.length < 5; i++) {
           let rand = Math.floor(Math.random() * data.length);
-          if (!res.includes(data[rand])) {
+          if (!res.includes(data[rand]) && data[rand].name) {
             res.push(data[rand]);
           }
         }
-        return filterUsers(res)
-      } return filterUsers(data)
+        return res;
+      }
+      return data;
     }
   }
+  useEffect(() => {
+    setSideUsers(getUsers(all));
+    setSideGroups(getUsers([{ name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }]));
+  }, [all]);
 
-  function filterUsers(array){
+
+  function side(array) {
+    if(array)
     return array.map((item) => {
       return (
         <div className="flex m-2 wrap:flex-row flex-col" key={nanoid()}>
@@ -120,8 +128,8 @@ export default function ScrollPage({ user, all }) {
       <div className="wrap:w-side-box p-2 border-4 order-1 w-1/2 h-min">
         <h1 className="font-semibold">You may know...</h1>
         <hr />
-
-        <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">{getUsers(all)}</div>
+          
+        <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">{side(sideUsers)}</div>
       </div>
 
       <div className="wrap:w-main-box w-full flex flex-col order-3 wrap:order-2 m-2 wrap:m-0">
@@ -145,9 +153,7 @@ export default function ScrollPage({ user, all }) {
         <h1 className="font-semibold">Groups...</h1>
         <hr />
 
-        <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">
-            {getUsers([{name: "Murdria"},{name: "Murdria"},{name: "Murdria"},{name: "Murdria"},{name: "Murdria"}])}
-        </div>
+        <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">{side(sideGroups)}</div>
       </div>
     </div>
   );

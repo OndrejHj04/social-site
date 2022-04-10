@@ -71,7 +71,7 @@ export default function App() {
         <Routes>
           <Route path="" element={<Nav removeActive={removeActive} user={user} />}>
             <Route path="" element={<Homepage setActive={setActive} all={all} removeActive={removeActive} />} />
-            <Route path="guest/CreateAccount" element={<CreateAccount setActive={setActive} />} />
+            <Route path="guest/CreateAccount" element={<CreateAccount setActive={setActive} all={all}/>} />
             <Route path="guest/ForgottenPassword" element={<LostPassword />} />
             <Route path="guest/ForgottenPassword/reset" element={<ResetPassword />} />
             <Route path="user/ScrollPage" element={<ScrollPage user={user} all={all} />} />
