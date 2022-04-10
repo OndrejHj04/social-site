@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import Contribution from "./Contribution";
 import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy } from "firebase/firestore";
+import { nanoid } from "nanoid";
 
-export default function ScrollPage({ user }) {
+export default function ScrollPage({ user, all }) {
   let date = new Date();
   let hours = date.getHours();
   let minutes = date.getMinutes();
@@ -21,11 +22,10 @@ export default function ScrollPage({ user }) {
       return {
         ...oldVal,
         [event.target.name]: event.target.value,
-        user: user.name
+        user: user.name,
       };
     });
   }
-  console.log(user.name)
   function click(event) {
     event.preventDefault();
 
@@ -33,7 +33,6 @@ export default function ScrollPage({ user }) {
     const docRef = doc(db, "messages", id);
     deleteDoc(docRef);
   }
-
   useEffect(() => {
     setContribution((oldVal) => {
       return { ...oldVal, date: dateStr };
@@ -85,21 +84,44 @@ export default function ScrollPage({ user }) {
     }
   }, [high, messages]);
 
+
+
+  function getUsers(data) {
+    if (data) {
+      if (data.length > 5) {
+        let res = []
+        for (let i = 0; res.length < 5; i++) {
+          let rand = Math.floor(Math.random() * data.length);
+          if (!res.includes(data[rand])) {
+            res.push(data[rand]);
+          }
+        }
+        return filterUsers(res)
+      } return filterUsers(data)
+    }
+  }
+
+  function filterUsers(array){
+    return array.map((item) => {
+      return (
+        <div className="flex m-2 wrap:flex-row flex-col" key={nanoid()}>
+          <img src={require("./img.png")} alt="" width="60" className="m-auto" />
+          <div className="w-full flex flex-col">
+            <h1 className="text-center">{item.name}</h1>
+            <div className="px-2 rounded-md bg-logo-blue m-auto text-white font-semibold">Follow</div>
+          </div>
+        </div>
+      );
+    });
+  }
+
   return (
     <div className=" w-full max-w-scroll-page mx-auto my-5 flex justify-between flex-wrap">
       <div className="wrap:w-side-box p-2 border-4 order-1 w-1/2 h-min">
         <h1 className="font-semibold">You may know...</h1>
         <hr />
 
-        <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Ondřej Hájek</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto text-white font-semibold">Follow</div>
-            </div>
-          </div>
-        </div>
+        <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">{getUsers(all)}</div>
       </div>
 
       <div className="wrap:w-main-box w-full flex flex-col order-3 wrap:order-2 m-2 wrap:m-0">
@@ -124,13 +146,7 @@ export default function ScrollPage({ user }) {
         <hr />
 
         <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">
-          <div className="flex m-2 wrap:flex-row flex-col">
-            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-            <div className="w-full flex flex-col">
-              <h1 className="text-center">Murdria</h1>
-              <div className="px-2 rounded-md bg-logo-blue m-auto text-white font-semibold">Follow</div>
-            </div>
-          </div>
+            {getUsers([{name: "Murdria"},{name: "Murdria"},{name: "Murdria"},{name: "Murdria"},{name: "Murdria"}])}
         </div>
       </div>
     </div>

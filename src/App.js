@@ -7,7 +7,7 @@ import Nav from "./Nav";
 import Profile from "./Profile";
 import Settings from "./Settings";
 import { initializeApp } from "firebase/app";
-import { getFirestore, deleteDoc, doc, setDoc, getDocs, collection } from "firebase/firestore";
+import { getFirestore, deleteDoc, doc, setDoc, getDocs, collection, onSnapshot } from "firebase/firestore";
 import "./style.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
@@ -30,25 +30,32 @@ export default function App() {
   function setActive(user) {
     setDoc(doc(db, "active", "1"), {
       ...user,
-      id: "1"
+      id: "1",
     });
-
   }
 
   function removeActive() {
     const ref = doc(db, "active", "1");
     deleteDoc(ref);
   }
-  
-  const docRef = collection(db, 'active');
+  const userRef = collection(db, "users");
+
+  const docRef = collection(db, "active");
+  const [all, setAll] = useState();
 
   const fetchData = () => {
-    getDocs(docRef)
-    .then(snapshot => {
-      if(snapshot.docs[0])
-      setUser(snapshot.docs[0].data())
-    })
-  }
+    getDocs(docRef).then((snapshot) => {
+      if (snapshot.docs[0]) setUser(snapshot.docs[0].data());
+    });
+
+    onSnapshot(userRef, (snapshot) => {
+      let users = [];
+      snapshot.docs.forEach((doc) => {
+        users.push({ ...doc.data(), id: doc.id });
+      });
+      setAll(users);
+    });
+  };
   const [user, setUser] = useState("");
 
   const tempData = useRef();
@@ -62,15 +69,15 @@ export default function App() {
     <>
       <Router>
         <Routes>
-            <Route path="" element={<Nav removeActive={removeActive} user={user} />}>
-              <Route path="" element={<Homepage setActive={setActive} removeActive={removeActive} />} />
-              <Route path="guest/CreateAccount" element={<CreateAccount setActive={setActive} />} />
-              <Route path="guest/ForgottenPassword" element={<LostPassword />} />
-              <Route path="guest/ForgottenPassword/reset" element={<ResetPassword />} />
-              <Route path="user/ScrollPage" element={<ScrollPage user={user} />} />
-              <Route path="user/Profile" element={<Profile user={user} />} />
-              <Route path="user/Settings" element={<Settings />} />
-              <Route path="*" element={<Homepage setActive={setActive} removeActive={removeActive} />} />
+          <Route path="" element={<Nav removeActive={removeActive} user={user} />}>
+            <Route path="" element={<Homepage setActive={setActive} all={all} removeActive={removeActive} />} />
+            <Route path="guest/CreateAccount" element={<CreateAccount setActive={setActive} />} />
+            <Route path="guest/ForgottenPassword" element={<LostPassword />} />
+            <Route path="guest/ForgottenPassword/reset" element={<ResetPassword />} />
+            <Route path="user/ScrollPage" element={<ScrollPage user={user} all={all} />} />
+            <Route path="user/Profile" element={<Profile user={user} />} />
+            <Route path="user/Settings" element={<Settings />} />
+            <Route path="*" element={<Homepage setActive={setActive} removeActive={removeActive} />} />
           </Route>
         </Routes>
       </Router>

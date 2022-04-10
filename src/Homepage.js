@@ -12,6 +12,9 @@ export default function Homepage(props) {
   const [users, setUsers] = useState();
 
   props.removeActive();
+  useEffect(() => {
+    setUsers(props.all);
+  }, [props]);
 
   function change(event) {
     setLogin((oldVal) => {
@@ -32,21 +35,6 @@ export default function Homepage(props) {
       }
     });
   }
-
-  const fetchData = () => {
-    onSnapshot(userRef, (snapshot) => {
-      let users = [];
-      snapshot.docs.forEach((doc) => {
-        users.push({ ...doc.data(), id: doc.id });
-      });
-      setUsers(users);
-    });
-  };
-  tempData.current = fetchData;
-
-  useEffect(() => {
-    tempData.current();
-  }, []);
 
   return (
     <>

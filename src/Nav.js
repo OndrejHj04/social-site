@@ -20,7 +20,6 @@ export default function Nav(props) {
     }
   }, [navigation]);
 
-
   
   
   return (
@@ -41,6 +40,7 @@ export default function Nav(props) {
             </div>
           </>
         )}
+
 
         {loged && (
           <>
