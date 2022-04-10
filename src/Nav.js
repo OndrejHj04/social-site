@@ -52,7 +52,7 @@ export default function Nav(props) {
               {props.user.name}
               </NavLink>
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Settings">
-                Settings
+                Development
               </NavLink>
               <NavLink style={active} className="mx-4 text-xl text-center" to="/" onClick={props.removeActive}>
                 Log out

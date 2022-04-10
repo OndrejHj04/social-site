@@ -112,7 +112,6 @@ export default function ScrollPage({ user, all }) {
     setSideGroups(getUsers([{ name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }]));
   }, [all]);
 
-  console.log("xd")
   function side(array) {
     if(array)
     return array.map((item) => {
