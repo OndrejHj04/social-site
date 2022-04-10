@@ -3,15 +3,15 @@ import Contribution from "./Contribution";
 import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, query, orderBy } from "firebase/firestore";
 
 export default function ScrollPage(props) {
+  console.log(props)
   let date = new Date();
-
   let hours = date.getHours();
   let minutes = date.getMinutes();
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let dateStr = `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${day}.${month}.${year}`;
-  const [contribution, setContribution] = useState({ user: props.user.name, title: "", text: "", date: dateStr });
+  const [contribution, setContribution] = useState({ user: "Hájek", title: "", text: "", date: dateStr });
   const [messages, setMessages] = useState();
   const db = getFirestore();
   const mesRef = collection(db, "messages");
@@ -22,7 +22,6 @@ export default function ScrollPage(props) {
       return {
         ...oldVal,
         [event.target.name]: event.target.value,
-        user: props.user.name
       };
     });
   }
@@ -45,7 +44,7 @@ export default function ScrollPage(props) {
     event.preventDefault();
 
     addDoc(mesRef, contribution);
-    setContribution({ user: props.user.name, title: "", text: "", date: dateStr });
+    setContribution({ user: "Hájek", title: "", text: "", date: dateStr });
   }
 
   const q = query(mesRef, orderBy("sort", "desc"));

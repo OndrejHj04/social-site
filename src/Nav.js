@@ -42,14 +42,14 @@ export default function Nav(props) {
           </>
         )}
 
-        {loged && props.user.name && (
+        {loged && (
           <>
             <NavLink className="mx-4 font-chalk text-white text-4xl" to="/user/ScrollPage">
               Blig
             </NavLink>
             <div className="flex flex-col sm:flex-row ml-auto sm:m-0">
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Profile">
-              {props.user.name}
+              Profile
               </NavLink>
               <NavLink style={active} className="mx-4 text-xl text-center" to="/user/Settings">
                 Settings
