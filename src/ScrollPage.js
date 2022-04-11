@@ -16,6 +16,8 @@ export default function ScrollPage({ user, all }) {
   const db = getFirestore();
   const mesRef = collection(db, "messages");
   const tempData = useRef();
+  const [sideUsers, setSideUsers] = useState();
+  const [sideGroups, setSideGroups] = useState();
 
   function change(event) {
     setContribution((oldVal) => {
@@ -56,12 +58,15 @@ export default function ScrollPage({ user, all }) {
 
       setMessages(mes);
     });
+    setSideUsers(getUsers(all));
+    setSideGroups(getUsers([{ name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }]));
   };
+
   tempData.current = fetchData;
 
   useEffect(() => {
     tempData.current();
-  }, []);
+  }, [all]);
 
   let indexes = [0];
 
@@ -84,8 +89,7 @@ export default function ScrollPage({ user, all }) {
     }
   }, [high, messages]);
 
-  const [sideUsers, setSideUsers] = useState();
-  const [sideGroups, setSideGroups] = useState();
+
 
   function getUsers(data) {
     if (data) {
@@ -107,10 +111,7 @@ export default function ScrollPage({ user, all }) {
       
     }
   }
-  useEffect(() => {
-    setSideUsers(getUsers(all));
-    setSideGroups(getUsers([{ name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }, { name: "Murdria" }]));
-  }, [all]);
+
 
   function side(array) {
     if(array)
