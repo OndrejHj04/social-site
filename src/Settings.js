@@ -44,6 +44,7 @@ export default function Settings() {
 
           if (object[string]) object[string].children.push({ name: patch, date: date });
         }
+        return commit
       });
 
       object = Object.values(object).reverse();
