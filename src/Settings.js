@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 
@@ -12,29 +13,23 @@ export default function Settings() {
 
   function getCommits() {
     if (repos) {
-      return repos.map((commit) => {
-        const patch = commit.commit.message.replace();
-        const date = commit.commit.committer.date.replace(/[A-Z]/g, " ").replace(/-/g, " ");
+      let object = {};
+
+      repos.map((commit) => {
+        const patch = commit.commit.message.replace("[", "").replace("]", "");
+        const date = commit.commit.committer.date.substring(5, 10).replace("-", ". ") + ".";
 
         if(!patch.includes(".") && patch.includes("Patch")){
-          return (
-            <div key={nanoid()} className="bg-stone-400 p-1 group m-1 flex">
-              <p className="font-bold">{patch}</p>
-              <p className="ml-auto">{date}</p>
-              <br />
-            </div>
-          );
-        }else{
-          return (
-            <div key={nanoid()} >
-              <p className=" ">{patch}</p>
-              <p>{date}</p>
-              <br />
-            </div>
-          );
+          object[patch.replace("Patch", "")] = {name: patch, date: date, children: []}
+        }else if(patch.includes("Patch")){
+          let string = Number(patch.substring(0, patch.indexOf(".")).replace("Patch", ""))+1
+            
+          if(object[string]) 
+          object[string].children.push({name: patch, date: date})
         }
-
       });
+
+      console.log(object)
     }
   }
 
