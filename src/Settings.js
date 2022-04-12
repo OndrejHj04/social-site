@@ -11,27 +11,28 @@ export default function Settings() {
   }, []);
 
   function click(e) {
-    let target = e.target.parentElement.parentElement.lastChild;
-    let arrow = e.target
+    let target = e.currentTarget.parentElement.lastChild;
+    let arrow = e.currentTarget.lastChild;
+    if (arrow) {
+      if (target.classList.value === "block") {
+        target.classList.remove("block");
+        target.classList.add("hidden");
 
-    if (target.classList.value === "block") {
-      target.classList.remove("block");
-      target.classList.add("hidden");
+        arrow.classList.value = "";
+      } else if (target.classList.value === "hidden") {
+        target.classList.remove("hidden");
+        target.classList.add("block");
 
-      arrow.classList.value = ""
-
-    } else if (target.classList.value === "hidden") {
-      target.classList.remove("hidden");
-      target.classList.add("block");
-
-      arrow.classList.value = ""
-      arrow.classList.add("rotate-90")
+        arrow.classList.value = "";
+        arrow.classList.add("rotate-90");
+      }
     }
   }
 
   function getCommits() {
     if (repos) {
       let object = {};
+      const dt = new Date();
 
       repos.map((commit) => {
         const patch = commit.commit.message.replace("[", "").replace("]", "");
@@ -44,7 +45,7 @@ export default function Settings() {
 
           if (object[string]) object[string].children.push({ name: patch, date: date });
         }
-        return commit
+        return commit;
       });
 
       object = Object.values(object).reverse();
@@ -53,22 +54,33 @@ export default function Settings() {
         const versions = item.children.map((child) => {
           return (
             <div key={nanoid()} className="flex justify-between w-40 ml-5">
-              <h1>{child.name}</h1>
-              <p>{child.date}</p>
+              <h1>
+                {child.name.substring(0, 5)} {child.name.substring(5)}
+              </h1>
+              <p>
+                {child.date.substring(4)} {child.date.substring(0, 3)}
+              </p>
             </div>
           );
         });
         return (
-          <div key={nanoid()}>
-            <div className="bg-slate-300 border-2 border-black flex justify-between p-1">
-              <div className="w-60 flex justify-between">
-                <h1 className="text-lg font-semibold">{item.name.substring(0,5)} {item.name.substring(5)}</h1>
-                <p>{item.date}</p>
+          <>
+            <div key={nanoid()}>
+              <div className="flex justify-between p-1 my-2 rounded-2xl h-14" onClick={click}>
+                <div className="w-60 flex justify-between my-auto">
+                  <h1 className="text-lg font-semibold">
+                    {item.name.substring(0, 5)} {item.name.substring(5)}
+                  </h1>
+                  <p>
+                    {item.date.substring(4)} {item.date.substring(0, 3)} {dt.getYear() + 1900}
+                  </p>
+                </div>
+                {!!versions.length && <img src={require("./arrow.png")} alt="" width="40" />}
               </div>
-              <img src={require("./arrow.png")} alt="" width="40" onClick={click} />
+              {!!versions.length && <div className="hidden">{versions}</div>}
             </div>
-            {versions && <div className="hidden">{versions}</div>}
-          </div>
+            <hr />
+          </>
         );
       });
     }
