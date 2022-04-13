@@ -27,7 +27,7 @@ export default function Homepage(props) {
       if (item.name === login.name && item.password === login.password) {
         props.setActive(item);
         navigate("/user/ScrollPage");
-        window.location.reload(false); // refresh that is not ideal fixing problem with getting active user data to scrollPage => problem at App.js
+        window.location.reload(false);
       }
     });
   }

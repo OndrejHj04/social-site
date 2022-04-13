@@ -33,11 +33,10 @@ export default function CreateAccount(props) {
       }else if(usedEmails.includes(createProfile.email)){
         setError(`An account with this email is already created. Please sing in!`)
       }else{
-  // sometimes user is not recognized as active => create profile behaves like undefined
         props.setActive(createProfile); 
         addDoc(userRef, createProfile);
         navigate("/user/ScrollPage");
-        window.location.reload(false); // refresh that is not ideal fixing problem with getting active user data to scrollPage => problem at App.js
+        window.location.reload(false)
       }
     }
   }
