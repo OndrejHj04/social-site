@@ -54,7 +54,8 @@ export default function Settings() {
           return (
             <div key={nanoid()} className="flex justify-between w-40 ml-5">
               <h1>
-                {child.name.substring(0, 5)} {child.name.substring(5)}
+                {console.log(child.name)}
+                {child.name.substring(0, 5)} {child.name.substring(5).replace("eslint :(", "")}
               </h1>
               <p>
                 {child.date.substring(4)} {child.date.substring(0, 3)}
@@ -62,7 +63,6 @@ export default function Settings() {
             </div>
           );
         });
-        console.log(repos)
         return (
           <>
             <div key={nanoid()}>
