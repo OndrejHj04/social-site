@@ -1,6 +1,4 @@
-import { useState } from "react";
 export default function Profile(props) {
-  const [photo, setPhoto] = useState();
   return (
     <div className="flex max-w-5xl mx-auto my-4 ">
       <div className="relative group">
