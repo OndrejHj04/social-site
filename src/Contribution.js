@@ -14,7 +14,7 @@ export default function Contribution(props) {
             <h1 className="text-2xl my-auto mx-3">{item.user}</h1>
           </div>
 
-          <div>
+          <div className="p-2">
             <h1 className="text-xl font-semibold">{item.title}</h1>
             <p>{item.text}</p>
           </div>

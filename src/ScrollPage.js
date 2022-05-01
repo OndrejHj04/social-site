@@ -133,8 +133,8 @@ export default function ScrollPage({ user, all }) {
         <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">{side(sideUsers)}</div>
       </div>
 
-      <div className="wrap:w-main-box w-full flex flex-col order-3 wrap:order-2 m-2 wrap:m-0">
-        <form className="flex flex-col w-full" onSubmit={submit}>
+      <div className="wrap:w-main-box w-full flex flex-col order-3 wrap:order-2 m-2 wrap:m-0 min-w-0">
+        <form className="flex flex-col" onSubmit={submit}>
           <label className="text-xl font-semibold">Share how do you feel!</label>
           <input type="text" className="bg-logo-blue text-white text-xl font-semibold outline-none p-1 mb-2" placeholder="Title..." onChange={change} value={contribution.title} name="title" />
           <textarea className="w-full resize-none h-28 outline-none bg-logo-blue text-white p-1" placeholder="Content..." onChange={change} value={contribution.text} name="text"></textarea>

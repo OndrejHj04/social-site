@@ -49,7 +49,6 @@ export default function Settings() {
       });
 
       object = Object.values(object).reverse();
-
       return object.map((item) => {
         const versions = item.children.map((child) => {
           return (
@@ -63,6 +62,7 @@ export default function Settings() {
             </div>
           );
         });
+        console.log(repos)
         return (
           <>
             <div key={nanoid()}>
