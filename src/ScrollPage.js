@@ -89,8 +89,6 @@ export default function ScrollPage({ user, all }) {
     }
   }, [high, messages]);
 
-
-
   function getUsers(data) {
     if (data) {
       if (data.length > 5) {
@@ -102,30 +100,28 @@ export default function ScrollPage({ user, all }) {
           }
         }
         return res;
-      }else{
-        data = data.filter(item=>{
-          return item.name !== user.name
-        })
+      } else {
+        data = data.filter((item) => {
+          return item.name !== user.name;
+        });
         return data;
       }
-      
     }
   }
 
-
   function side(array) {
-    if(array)
-    return array.map((item) => {
-      return (
-        <div className="flex m-2 wrap:flex-row flex-col" key={nanoid()}>
-          <img src={require("./img.png")} alt="" width="60" className="m-auto" />
-          <div className="w-full flex flex-col">
-            <h1 className="text-center">{item.name}</h1>
-            <div className="px-2 rounded-md bg-logo-blue m-auto text-white font-semibold">Follow</div>
+    if (array)
+      return array.map((item) => {
+        return (
+          <div className="flex m-2 wrap:flex-row flex-col" key={nanoid()}>
+            <img src={require("./img.png")} alt="" width="60" className="m-auto" />
+            <div className="w-full flex flex-col">
+              <h1 className="text-center">{item.name}</h1>
+              <div className="px-2 rounded-md bg-logo-blue m-auto text-white font-semibold">Follow</div>
+            </div>
           </div>
-        </div>
-      );
-    });
+        );
+      });
   }
 
   return (
@@ -133,7 +129,7 @@ export default function ScrollPage({ user, all }) {
       <div className="wrap:w-side-box p-2 border-4 order-1 w-1/2 h-min">
         <h1 className="font-semibold">You may know...</h1>
         <hr />
-          
+
         <div className="flex wrap:flex-col flex-row wrap:overflow-y-auto overflow-y-scroll no-scrollbar">{side(sideUsers)}</div>
       </div>
 
